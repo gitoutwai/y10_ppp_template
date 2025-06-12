@@ -1,9 +1,12 @@
+from shells import Shell
+
 class Tank:
     def __init__(self, name, nation, hp):
         self.name = name
-        self.type = nation
+        self.nation = nation
         self.hp = hp
         self.shellTypes = ["PzGr 39", "PzGr 40"]
+    
     def checkstats(self):
         print(f"The {self.name} has {self.hp} hp!")
 
