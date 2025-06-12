@@ -1,6 +1,6 @@
 from tank import Tank
-from random import choice
-from random import randint
+from battle import Battle
+from shells import Shell
 
 # Player settings
 tanks = {}
@@ -11,6 +11,12 @@ USA = "USA"
 USSR = "USSR"
 nations = [Germany, France, Britain, USA, USSR]
 hitTypes = ["direct hit", "ricochet", "miss", "non-penetrate"]
+locations = {"Western Europe":0,
+             "Eastern Europe":0,
+             "Southern Europe":0,
+             "Northern Europe":0}
+
+currentLoc = "Western Europe"
 
 playerNation = ""
 while playerNation not in nations:
@@ -34,46 +40,18 @@ for t in tanks.keys():
         tankEnemies.append(t)
 
 # tankUsed = input("What is the tank you wish to use: ") - add later for more tanks per nation
-
-# Enemy selection
-enemy = choice(tankEnemies)
-print(f"Your enemy is {enemy} from {tanks[enemy].nation}!")
-battle = input("Do you wish to start the battle?(y/n)").lower()
-while battle == "y":
-    shell = input("What is the shell used: ")
-    while shell not in tanks[playerTank].shellTypes:
-        shell = input("What is the shell used: ")
-
-    # Striking the enemy
-    tanks[playerTank].attack(shell, enemy)
-    hit = choice(hitTypes)
-    print(f"You scored a {hit}!")
-    if hit == "direct hit":
-        tanks[enemy].damaged(randint(200, 400))
-    elif hit == "ricochet":
-        tanks[enemy].damaged(randint(0, 50))
-    elif hit == "miss":
-        pass
-    elif hit == "non-penetrate":
-        tanks[enemy].damaged(randint(0, 100))
-
-    tanks[enemy].checkstats()
-    
-    if tanks[enemy].hp > 0:
-        # Enemy striking the player
-        tanks[enemy].attack(shell, playerTank)
-        hit = choice(hitTypes)
-        print(f"The enemy scored a {hit}!")
-        if hit == "direct hit":
-            tanks[playerTank].damaged(randint(200, 400))
-        elif hit == "ricochet":
-            tanks[playerTank].damaged(randint(0, 50))
-        elif hit == "miss":
-            pass
-        elif hit == "non-penetrate":
-            tanks[playerTank].damaged(randint(0, 100))
-
-        tanks[playerTank].checkstats()
-    else:
-        print(f"{enemy} has been defeated!")
-        battle = "n"
+game = True
+while game:
+    action = input("What do you want to do? ")
+    if action == "battle":
+        Battle.battle(playerTank, tankEnemies, tanks, hitTypes, locations[currentLoc])
+    elif action == "relocate":
+        inputLoc = input("Where do you want to relocate to? ")
+        if inputLoc in locations:
+            if locations[inputLoc] < 10:
+                currentLoc = inputLoc
+                tanks[playerTank].relocate(inputLoc)
+            else:
+                print("That level has been completed already!")
+        else:
+            print("That location does not exist!")
