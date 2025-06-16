@@ -24,6 +24,7 @@ class Battle:
             else:
                 print("You have been defeated! Head to the repair shops!")
                 battle = "n"
+                tanks[enemy].hp = tanks[enemy].maxhp
                 break
 
             # Striking the enemy
@@ -58,6 +59,8 @@ class Battle:
                 tanks[playerTank].checkstats()
             else:
                 print(f"{enemy} has been defeated!")
+                tanks[playerTank].money += 20
                 location += 1
                 battle = "n"
+                tanks[enemy].hp = tanks[enemy].maxhp
                 break

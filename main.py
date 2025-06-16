@@ -53,5 +53,16 @@ while game:
                 tanks[playerTank].relocate(inputLoc)
             else:
                 print("That level has been completed already!")
+                del locations[inputLoc]
+            
+
+        elif inputLoc == "repair shop":
+            repair = input("Would you like to repair your tank?(y/n) ")
+            if repair == "y" and tanks[playerTank].money >= 10:
+                tanks[playerTank].money -= 10
+                print("Your tank has been repaired!")
+                tanks[playerTank].hp = tanks[playerTank].maxhp
         else:
             print("That location does not exist!")
+    if action == "check stats":
+        print(f"You have {tanks[playerTank].money}$ and your tank has {tanks[playerTank].hp} health points!")

@@ -5,8 +5,10 @@ class Tank:
         self.name = name
         self.nation = nation
         self.hp = hp
-        self.shellTypes = ["PzGr 39", "PzGr 40"]
-    
+        self.maxhp = hp
+        self.shellTypes = ["APCBC", "HE", "APHE"]
+        self.money = 100
+
     def checkstats(self):
         print(f"The {self.name} has {self.hp} hp!")
 
