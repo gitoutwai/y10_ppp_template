@@ -2,7 +2,7 @@ from random import choice
 from random import randint
 
 class Battle:
-    def battle(playerTank, tankEnemies, tanks, hitTypes, location):
+    def battle(playerTank, tankEnemies, tanks, hitTypes, location, currentLoc):
         # Enemy selection
         enemy = choice(tankEnemies)
         print(f"Your enemy is {enemy} from {tanks[enemy].nation}!")
@@ -60,7 +60,7 @@ class Battle:
             else:
                 print(f"{enemy} has been defeated!")
                 tanks[playerTank].money += 20
-                location += 1
+                location[currentLoc] += 1
                 battle = "n"
                 tanks[enemy].hp = tanks[enemy].maxhp
                 break

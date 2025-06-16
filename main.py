@@ -42,9 +42,17 @@ for t in tanks.keys():
 # tankUsed = input("What is the tank you wish to use: ") - add later for more tanks per nation
 game = True
 while game:
+    if len(locations) == 0:
+        print("Well done! You have won the game!")
+        game = False
+
+    while locations[currentLoc] >= 10:
+        inputLoc = input("You have completed this level, where would you like to go next? ")
+        currentLoc = inputLoc
+    
     action = input("What do you want to do? ")
     if action == "battle":
-        Battle.battle(playerTank, tankEnemies, tanks, hitTypes, locations[currentLoc])
+        Battle.battle(playerTank, tankEnemies, tanks, hitTypes, locations, currentLoc)
     elif action == "relocate":
         inputLoc = input("Where do you want to relocate to? ")
         if inputLoc in locations:
@@ -65,4 +73,4 @@ while game:
         else:
             print("That location does not exist!")
     if action == "check stats":
-        print(f"You have {tanks[playerTank].money}$ and your tank has {tanks[playerTank].hp} health points!")
+        print(f"\nYou have {tanks[playerTank].money}$ and your tank has {tanks[playerTank].hp} health points!\nYou have completed {locations[currentLoc]} successful battles in {currentLoc}!\n")
