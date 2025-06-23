@@ -14,7 +14,8 @@ hitTypes = ["direct hit", "ricochet", "miss", "non-penetrate"]
 locations = {"Western Europe":0,
              "Eastern Europe":0,
              "Southern Europe":0,
-             "Northern Europe":0}
+             "Northern Europe":0,
+             "temp":10}
 
 currentLoc = "Western Europe"
 
@@ -42,13 +43,26 @@ for t in tanks.keys():
 # tankUsed = input("What is the tank you wish to use: ") - add later for more tanks per nation
 game = True
 while game:
-    if len(locations) == 0:
+    while (currentLoc == "temp" and len(locations) > 1) or (locations[currentLoc] >= 10 and len(locations) > 1):
+        
+        if currentLoc != "temp":
+            del locations[currentLoc]
+        
+        if len(locations) == 1:
+            break
+
+        inputLoc = input("You have completed this level, where would you like to go next? ")
+        if inputLoc in locations:
+            currentLoc = inputLoc
+        else:
+            print("Location does not exist!")
+            currentLoc = "temp"
+    
+    if len(locations) == 1:
         print("Well done! You have won the game!")
         game = False
-
-    while locations[currentLoc] >= 10:
-        inputLoc = input("You have completed this level, where would you like to go next? ")
-        currentLoc = inputLoc
+        break
+            
     
     action = input("What do you want to do? ")
     if action == "battle":
